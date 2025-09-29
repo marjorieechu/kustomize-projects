@@ -27,7 +27,7 @@ jobs:
     - name: Validate base configuration
       run: |
         echo "Testing base configuration..."
-        kustomize build base/ > /dev/null
+        kustomize build kustomize-demo/base/ > /dev/null
         echo "✅ Base is valid"
 
     - name: Validate dev environment 
