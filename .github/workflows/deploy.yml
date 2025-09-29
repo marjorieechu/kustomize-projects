@@ -1,0 +1,52 @@
+name: Validate and Update Kustomize Configurations
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  validate-all-environments:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Kustomize
+      run: |
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+        sudo mv kustomize /usr/local/bin/
+
+    - name: Validate base configuration
+      run: |
+        echo "Testing base configuration..."
+        kubectl kustomize base/ > /dev/null
+        echo "✅ Base is valid"
+
+    - name: Validate dev environment
+      run: |
+        echo "Testing dev environment..."
+        kubectl kustomize overlays/dev/ > /dev/null  
+        echo "✅ Dev environment is valid"
+
+    - name: Validate staging environment
+      run: |
+        echo "Testing staging environment..."
+        kubectl kustomize overlays/staging/ > /dev/null
+        echo "✅ Staging environment is valid"
+
+    - name: Validate production environment  
+      run: |
+        echo "Testing production environment..."
+        kubectl kustomize overlays/prod/ > /dev/null
+        echo "✅ Production environment is valid"
+
+    - name: Update dev environment with build info
+      working-directory: overlays/dev
+      run: |
+        echo "Updating dev environment..."
+        kustomize edit set image webapp=nginx:1.22-dev-${{ github.sha }}
+        kustomize edit add label build-id:${{ github.run_id }}
+        kustomize edit add label git-commit:${{ github.sha }}
+        echo "Updated dev kustomization:"
+        cat kustomization.yaml
