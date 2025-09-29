@@ -56,4 +56,4 @@ jobs:
         kustomize edit add label build-id:${{ github.run_id }}
         kustomize edit add label git-commit:${{ github.sha }}
         echo "Updated dev kustomization:"
-        cat kustomization.yaml
+        cat kustomization.yml
