@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-backend
+  labels:
+    app:
+spec:
+  type: ClusterIP # default type (can be NodePort, LoadBalancer, etc.)
+  selector:
+    app: # must match pod template labels in the Deployment
+  ports:
+  - name: http
+    port: 80 # service port (inside cluster)
+    protocol: TCP
+    targetPort: http # matches the container port name "http" in the Deployment

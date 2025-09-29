@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+kind: Kustomization
+
+namespace: myapp-ns-staging
+
+resources:
+- ../../base
+
+namePrefix: staging-
+
+labels:
+- includeSelectors: true
+  pairs:
+    environment: staging
+    version: v1.9.0
+
+configMapGenerator:
+- name: myapp-config
+  behavior: replace
+  literals:
+  - database_url=postgres://staging-db:5432/myapp_staging
+  - log_level=WARN
+  - cache_ttl=600
