@@ -27,25 +27,25 @@ jobs:
     - name: Validate base configuration
       run: |
         echo "Testing base configuration..."
-        kustomize build kustomize-demo/base/ > /dev/null
+        kubectl kustomize base/
         echo "✅ Base is valid"
 
     - name: Validate dev environment 
       run: |
         echo "Testing dev environment..."
-        kustomize build overlays/dev/ > /dev/null  
+        kubectl kustomize overlays/dev/   
         echo "✅ Dev environment is valid"
 
     - name: Validate staging environment
       run: |
         echo "Testing staging environment..."
-        kustomize build overlays/staging/ > /dev/null
+        kubectl kustomize overlays/staging/ > /dev/null
         echo "✅ Staging environment is valid"
 
     - name: Validate production environment  
       run: |
         echo "Testing production environment..."
-        kustomize build overlays/prod/ > /dev/null
+        kubectl kustomize overlays/prod/ > /dev/null
         echo "✅ Production environment is valid"
 
     - name: Update dev environment with build info
