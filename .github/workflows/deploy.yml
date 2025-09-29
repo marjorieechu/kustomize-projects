@@ -45,7 +45,7 @@ jobs:
       working-directory: overlays/dev
       run: |
         echo "Updating dev environment..."
-        kustomize edit set image webapp=nginx:1.22-dev-${{ github.sha }}
+        kustomize edit set image webapp=nginx:1.21-dev-${{ github.sha }}
         kustomize edit add label build-id:${{ github.run_id }}
         kustomize edit add label git-commit:${{ github.sha }}
         echo "Updated dev kustomization:"
