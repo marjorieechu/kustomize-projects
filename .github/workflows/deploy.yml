@@ -23,7 +23,7 @@ jobs:
         kubectl kustomize base/ > /dev/null
         echo "✅ Base is valid"
 
-    - name: Validate dev environment
+    - name: Validate dev environment 
       run: |
         echo "Testing dev environment..."
         kubectl kustomize overlays/dev/ > /dev/null  
