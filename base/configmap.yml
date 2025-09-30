@@ -8,3 +8,4 @@ data:
   database_url: "postgres://user:password@db:5432/myapp"
   log_level: "info"
   cache_ttl: "300"
+  feature_flag: "enabled"
